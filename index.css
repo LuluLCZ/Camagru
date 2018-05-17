@@ -8,7 +8,7 @@
 	margin: 0px;
 	padding: 0px;
 	background: lightslategray;
-	list-style:none;
+	list-style: none;
 }
 
 .nav a {
@@ -23,9 +23,15 @@
 	position: relative; /*Permet d aligner le sous menu en fonction du parent*/
 }
 
+.has-children:hover
+{
+	background: grey;
+}
+
 .has-children:hover > .sous-menu
 {
 	display: flex; /* curseur de la souris sur qqchose contenant sous menu, on l affiche en mode flex */
+	/* background-color: grey; */
 }
 
 .sous-menu

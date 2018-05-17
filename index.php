@@ -21,7 +21,7 @@ catch (Exception $e)
 	<body>
 	<nav class="nav" role="navigation">
 		<ul class="menu">
-			<li><a>Camagru</a></li>
+			<li><a href="index.php">Camagru</a></li>
 			<?php
 			if (!isset($_SESSION['user']))
 			{
@@ -56,25 +56,28 @@ catch (Exception $e)
 			<li class=\"has-children\"><a>Je suis membre !</a>
 				<!-- sous menu signup -->
 				<ul class=\"sous-menu\">
-					<li><a>
-					<form action=\"login.php\" method=\"post\">
+				<li><a>
+					<form action=\"./login.php\" method=\"post\">
 						<div>
 							<label for=\"user\">Pseudo</label> : <input type=\"text\" name=\"user\" id=\"user\" />
 						</div>
 						<div>
-							<label for=\"password\">Password</label> :  <input type=\"text\" name=\"password\" id=\"password\" />
+							<label for=\"password\">Password</label> :  <input type=\"password\" name=\"password\" id=\"password\" />
 						</div>
 						<div>
 							<input type=\"submit\" value=\"Envoyer\" />
 						</div>
-					</a></li>
-				</ul>
+					</form>
+				</a></li>
+			</ul>
 			</li>";
 			}
 			else
 			{
+				echo "<li><a href=\"profile.php\">Mon Profil</a></li>";
 				echo "<li><a href=\"logout.php\">Deconnexion</a></li>";
 			}
+			
 			?>
 	</body>
 </html>
