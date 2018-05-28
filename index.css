@@ -1,0 +1,177 @@
+main {
+	width: 90%;
+}
+
+ul {
+	padding: 0;
+	list-style: none;
+}
+
+.navbar {
+	display: flex;
+	height: 46px;
+	margin-top: 0;
+	align-items: center;
+	padding: 0 10px;
+	border: 1px solid rgba(238,238,238 ,1);
+	border-radius: 5px;
+	color: rgba(117,117,117 ,1);
+	box-shadow: 5px 10px 20px -20px rgba(85,172,238 ,1);
+}
+
+form {
+	/* display: flex; */
+	margin: auto;
+}
+
+a {
+	text-decoration: none;
+	color: rgba(117,117,117 ,1);
+}
+
+a:visited {
+	text-decoration: none;
+}
+
+.tendances a{
+	color: rgba(85,172,238 ,1);
+}
+
+.navbar a {
+	cursor: pointer;
+}
+.navbar a:hover{
+	color: rgb(119, 0, 255);
+}
+.tendances {
+	color: rgba(85,172,238 ,1);
+	font-size: 1.3em;
+	margin-right: auto;
+	margin-left: auto;
+}
+.navbar li:not(:last-child):not(.tendances) {
+	margin-right: 10px;
+}
+.navbar li i:not(.fa-navbar):not(.fa-search):not(.fa-user) {
+	margin-right: 3px;
+}
+.navbar li > button {
+	font-size: 0.8em;
+	border: 0;
+	background: rgba(85,172,238 ,1);
+	color: #fff;
+	border-radius: 100px;
+}
+
+.header-gallery {
+	display: flex;
+	flex-direction: column;
+}
+
+.title-1 {
+	display: flex;
+	height: 46px;
+	margin-top: 0;
+	font-size: 2em;
+	align-items: center;
+	padding: 0 10px;
+	border: 1px solid rgba(238,238,238 ,1);
+	border-radius: 5px;
+	color: rgba(85,172,238 ,1);
+	box-shadow: 5px 10px 20px -20px rgba(85,172,238 ,1);
+}
+
+.user-post {
+	display: flex;
+	height: 46px;
+	margin-top: 5px;
+	align-items: center;
+	padding: 0 10px;
+	border: 1px solid rgba(238,238,238 ,1);
+	border-radius: 5px;
+	color: rgba(117,117,117 ,1);
+	box-shadow: 5px 10px 20px -20px rgba(85,172,238 ,1);
+}
+
+/* .nav .menu {
+	display: flex;
+	flex-direction : row;
+	justify-content: center;
+}
+
+.nav ul {
+	margin: 0px;
+	padding: 0px;
+	background: lightslategray;
+	list-style: none;
+}
+
+.nav a {
+	padding: 1em;
+	display: block;
+	text-align:center;
+	text-decoration: none;
+}
+
+.has-children
+{
+	position: relative; /*Permet d aligner le sous menu en fonction du parent*/
+/* } */
+
+/* .has-children:hover
+{
+	background: grey;
+}
+
+.has-children:hover > .sous-menu
+{
+	display: flex; /* curseur de la souris sur qqchose contenant sous menu, on l affiche en mode flex */
+	/* background-color: grey; */
+/* }
+
+.sous-menu
+{
+	display: none;
+	flex-flow: column wrap;
+	min-width: 100px;
+	position: absolute;
+	background: dodgerblue;
+}
+
+.sous-menu a
+{
+	text-align: left;
+	color: white;
+}
+
+form
+{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+} */
+
+/* #contain_cam
+{
+	display: flex;
+	align-content: center;
+	flex-flow: column wrap;
+}
+
+#screenshot-video
+{
+	width: 500px;
+	margin-left: 50%;
+	border: 10px #333 solid;
+}
+
+#screenshot-img
+{
+	width: 500px;
+}
+
+#screenshot-button
+{
+	margin-left: 50%;
+	width: 300px;
+} */
