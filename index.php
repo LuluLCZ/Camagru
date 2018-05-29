@@ -63,6 +63,7 @@ require_once('classes_bdd/picture_manager.php');
 	}
 	else
 	{
+		$req_res = getAllPics();
 		require_once('pages/main.php');
 	}
 ?>
