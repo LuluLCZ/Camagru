@@ -28,12 +28,13 @@ class PostPic
 		$req_res = array();
 		try
 		{
-			$request = $db->prepare('SELECT * FROM imgs WHERE author = ?');
-			$request->execute(array('author' => $author));
-			if ($req->rowCount())
-				$req_res = $req->fetchAll();
+			$request = $db->prepare('SELECT * FROM imgs WHERE author = :user ORDER BY id DESC');
+			$request->execute(array(':user' => $user));
+			if ($request->rowCount())
+			{
+				$req_res = $request->fetchAll();
+			}
 			$req_res['content'] = $req_res;
-			$req_res['urates'] = $this->getUsrRates($user);
 			return $req_res;
 		}
 		catch(Exception $e)

@@ -1,29 +1,35 @@
 <?php
 session_start();
 require_once('classes_bdd/users.php');
-require_once('classes/account_modif.php');
 require_once('classes_bdd/picture_manager.php');
 
-require_once('classes/pics.php');
-
-?>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Accueil</title>
-	<link rel="stylesheet" href="index.css">
-	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,800" rel="stylesheet">
-</head>
-
-<body>
-</html>
-	<?php include('pages/header.php'); ?>
-	<?php include('pages/galery.php');?>
-
-<?php
-	if (isset($_GET['action']) && $_GET['action'] === "signin")
+	if ((isset($_GET['pages']) && ($_GET['pages'] !== "login" || $_GET['pages'] !== 'signup')) || !(isset($_GET['pages'])))
+	{
+		include('pages/header.php');
+	}
+	if (isset($_GET['pages']) && $_GET['pages'] === "login")
+		require_once('pages/login.php');
+	else if (isset($_GET['pages']) && $_GET['pages'] === "signup")
+		require_once('pages/signup.php');
+	else if (isset($_GET['pages']) && $_GET['pages'] === "pictures")
+		require_once('pages/pictures.php');
+	else if (isset($_GET['pages']) && $_GET['pages'] === "profile")
+	{
+		getPics();
+	}
+	else if (isset($_GET['pages']) && $_GET['pages'] === "info_account")
+		require_once('pages/info_account.php');
+	else if (isset($_GET['action']) && $_GET['action'] === "signin")
+	{
 		signin();
+		header('Location: /index.php');
+		
+		if ($_SESSION['confirm'] == 0)
+		{
+			session_destroy();
+			header('Location: /index.php');
+		}
+	}
 	else if (isset($_GET['action']) && $_GET['action'] === "signup")
 	{
 		print_r($_POST);
@@ -41,18 +47,22 @@ require_once('classes/pics.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'postPic')
 	{
-		// $result = new PostPic();
-		// $targetdir = './upload/';
-		// print_r($_FILES);
-		// if (!file_exists($targetdir))
-		// 	mkdir($targetdir);
-		// $targetfile = $targetdir.$_FILES['camContent']['name'];
-		// if (move_uploaded_file($_FILES['camContent']['tmp_name'], $targetfile))
-		// {
-		// 	$result->uploadImg($targetfile, 'llacaze', 980);
-		// }
-		// print_r($_GET);
-		// print_r($_POST);
 		sendNewPic();
+	}
+	else if (isset($_GET['action']) && $_GET['action'] === 'newpw')
+	{
+		changePw();
+	}
+	else if (isset($_GET['action']) && $_GET['action'] === 'updsumup')
+	{
+		updSumup();
+	}
+	else if (isset($_GET['action']) && $_GET['action'] === 'delacc')
+	{
+		delAccount();
+	}
+	else
+	{
+		require_once('pages/main.php');
 	}
 ?>

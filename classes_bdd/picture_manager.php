@@ -1,5 +1,4 @@
 <?php
-
 require_once('classes/pics.php');
 
 function sendNewPic()
@@ -12,4 +11,13 @@ function sendNewPic()
 		$result->uploadImg(base64_decode($_POST['camContent']), $auth, $_SESSION['uid']);
 	}
 }
+
+function getPics()
+{
+	$result = new PostPic();
+	$req_res = $result->getImg($_SESSION['login']);
+
+	require_once('pages/profile.php');
+}
+
 ?>

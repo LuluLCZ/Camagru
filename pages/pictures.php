@@ -1,8 +1,3 @@
-<?php
-session_start();
-include('header.php');
-?>
-
 <html>
 <head>
 	<meta charset="utf-8">
@@ -15,7 +10,7 @@ include('header.php');
 <body>
 
 <video id="screenshot-video" autoplay></video>
-<button id="screenshot-button">take a picture</button>
+<button id="screenshot-button">Capturer ce moment génial</button>
 
 <img src="" id="screenshot-img">
 <canvas style="display:none;"></canvas>

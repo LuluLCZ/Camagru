@@ -9,9 +9,11 @@ class LogManager
 		$request->execute(array('email' => $email, 'password' => hash('whirlpool', $password)));
 		if ($user_info = $request->fetch())
 		{
-			$_SESSION['uid'] = $user_info['id']; 
-			$_SESSION['login'] = $user_info['pseudo']; 
-			$_SESSION['email'] = $user_info['email']; 
+			$_SESSION['confirm'] = $user_info['confirm'];
+			$_SESSION['uid'] = $user_info['id'];
+			$_SESSION['login'] = $user_info['pseudo'];
+			$_SESSION['email'] = $user_info['email'];
+			$_SESSION['sumup'] = $user_info['sumup'];
 			$_SESSION['logged_on_user'] = true;
 			$_SESSION['logged_on_admin'] = ($user_info['admin'] = '0') ? false : true; 
 		}
@@ -24,18 +26,19 @@ class LogManager
 		$db = $this->dbConnect();
 		$exist = $db->prepare('SELECT * FROM users WHERE email = ? OR pseudo = ?');
 		$exist->execute(array($email, $pseudo));
-		if (!($exist->fetch()))
+		if (!($exist->fetch()))	
 		{
 			$confirm_key = hash('md5', rand());
 			try {
-				$request = $db->prepare('INSERT INTO users(pseudo, passwd, email, admin, confirm, confirm_key)
-					VALUES(:pseudo, :password, :email, :admin, :confirm, :confirm_key)');
+				$request = $db->prepare('INSERT INTO users(pseudo, passwd, email, admin, confirm, confirm_key, sumup)
+					VALUES(:pseudo, :password, :email, :admin, :confirm, :confirm_key, :sumup)');
 				$request->execute(array('pseudo' => $pseudo,
 									'password' => hash('whirlpool', $password),
 									'email' => $email,
 									'admin' => $admin,
 									'confirm' => 0,
-									'confirm_key' => $confirm_key
+									'confirm_key' => $confirm_key,
+									'sumup' => "Description"
 								)); ///////////////////////// -------------------------------- rand -> conf key
 				}
 			catch(Exception $e) {echo "An error occured" . $e->getMessage();}
@@ -45,8 +48,11 @@ class LogManager
 			$content = wordwrap($content, 70, "\r\n");
 			$subject = 'Activation of your account';
 			mail($email, $subject, $content);
-			return "ok";
+			return "Vous allez recevoir un mail d'activation sur votre adresse mail.";
 		}
+		else
+			echo "Le pseudo que vous avez rentrer est deja utilisé.";
+		
 	}
 
 	public function sendMail($to, $subject, $content)
