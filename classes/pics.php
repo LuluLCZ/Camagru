@@ -43,6 +43,27 @@ class PostPic
 		}
 	}
 
+	public function getAllImg()
+	{
+		$db = $this->dbconnect();
+		$req_res = array();
+		try
+		{
+			$request = $db->prepare('SELECT * FROM imgs ORDER BY id DESC');
+			$request->execute(array());
+			if ($request->rowCount())
+			{
+				$req_res = $request->fetchAll();
+			}
+			$req_res['content'] = $req_res;
+			return $req_res;
+		}
+		catch(Exception $e)
+		{
+			die("An error occured during account activation: " . $e->getMessge());
+		}
+	}
+
 	private function dbConnect()
 	{
 		try
