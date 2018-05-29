@@ -20,4 +20,11 @@ function getPics()
 	require_once('pages/profile.php');
 }
 
+function getAllPics()
+{
+	$result = new PostPic();
+	$req_res = $result->getAllImg();
+	return $req_res;
+}
+
 ?>
