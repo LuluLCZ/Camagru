@@ -11,8 +11,8 @@
 			<div class="title-1">Gallerie</div>
 			<?php foreach($req_res['content'] as $uimg): ?>
 				<div class="user-post">
-					<img alt=<?=$_SESSION['login']?> src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
-					<p><?=$uimg['date_uplo']?></p>
+					<img src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
+					<div><?=$uimg['date_uplo']?><br /><?=$uimg['author']?></div>
 				</div>
 			<?php endforeach; ?>
 		</div>
