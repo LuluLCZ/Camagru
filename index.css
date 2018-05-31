@@ -93,6 +93,26 @@ a:visited {
 	box-shadow: 5px 10px 20px -20px rgba(85,172,238 ,1);
 }
 
+.screen-taken {
+	position: relative;
+	top: 0;
+	left: 0;
+}
+.image1 {
+	position: relative;
+	top: 0;
+	left: 0;
+}
+.image2 {
+	position: absolute;
+	top: 30px;
+	left: 70px;
+}
+
+#buttons {
+	display: flex;
+}
+
 /* .nav .menu {
 	display: flex;
 	flex-direction : row;

@@ -7,7 +7,6 @@ class PostPic
 		$db = $this->dbconnect();
 		try
 		{
-			echo "FDO";
 			$request = $db->prepare('INSERT INTO imgs(author, uid, date_uplo, content, nrate, ncoms)
 					VALUES(:author, :uid, NOW(), :content, :nrate, :ncoms)');
 			$request->execute(array('author' => $author,
