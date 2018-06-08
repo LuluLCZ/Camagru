@@ -76,13 +76,12 @@ button.addEventListener("click", function()
 		ctx = canvas.getContext('2d');
 		ctx.drawImage(video, 0, 0, width, height);
 		img.src = canvas.toDataURL('image/png');
-
 		if (!document.getElementById('keep-it'))
 		{
 			select = '<button id="keep-it">Garder cette photo</a>';
 			document.getElementById('buttons').innerHTML += select;
 		}
-		keepit(img.src, document.getElementById('filter_fix').src);
+		keepit(img.src.split(',')[1], document.getElementById('filter_fix').src);
 	}
 );
 

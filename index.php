@@ -61,9 +61,15 @@ require_once('classes_bdd/picture_manager.php');
 	{
 		delAccount();
 	}
+	else if (isset($_GET['action']) && $_GET['action'] === 'postCom' && isset($_GET['img_id']))
+	{
+		SayitisBeautifull();
+		echo "OK";
+	}
 	else
 	{
 		$req_res = getAllPics();
+		// var_dump($req_res['0']['coms']);
 		require_once('pages/main.php');
 	}
 ?>

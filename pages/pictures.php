@@ -14,7 +14,7 @@
 	<img class="image2" src="" id='filter'>
 </div>
 <div class="screen-taken">
-	<img class="image1" src="" id="screenshot-img" style="width: 640px;">
+	<img class="image1" src="" id="screenshot-img" style="width: 600px;">
 	<img class="image2" src="" id='filter_fix'>
 </div>
 <button id="screenshot-button">Capturer ce moment génial</button>

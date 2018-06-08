@@ -8,12 +8,26 @@
 	</head>
 	<body>
 		<div class="header-gallery">
-			<div class="title-1">Gallerie</div>
-			<?php foreach($req_res['content'] as $uimg): ?>
-				<div class="user-post">
-					<img src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
-					<div><?=$uimg['date_uplo']?><br /><?=$uimg['author']?></div>
+			<div class="title-1">
+				Gallerie
+			</div>
+			<?php foreach($req_res as $uimg): ?>
+			<div class="user-post">
+				<div class="author-name">
+					<?= $uimg['author'] ?>
 				</div>
+				<p>le <?=$uimg['date_uplo']?></p>
+				<div class="double-pic">
+					<img class="image1" style="width: 600px;" src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
+					<img class="image2" src=<?=$uimg['filter_path']?>>
+				</div>
+			<?php foreach($uimg['coms'] as $tst): ?>
+			<div class="com"><div class="com_head"><p><?= $tst['d_com'] ?></p>
+							<p><?= $tst['auth'] ?></p></div>
+							<div><p><?= $tst['content'] ?></p></div></div>
+			<?php endforeach; ?>
+			</div>
+			
 			<?php endforeach; ?>
 		</div>
 	</body>

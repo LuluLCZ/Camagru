@@ -11,13 +11,20 @@
 	<div class="header-gallery">
 		<div class="title-1">Mes photos</div>
 		<?php foreach($req_res['content'] as $uimg): ?>
-		<div class="user-post">
-			
-					<img alt=<?=$_SESSION['login']?> src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
-				<p><?=$uimg['date_uplo']?></p>
-
-			
-		</div>
+			<div class="user-post">
+					<div class="double-pic">
+						<img class="image1" style="width: 600px;" alt=<?=$_SESSION['login']?> src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
+						<img class="image2" src=<?=$uimg['filter_path']?>>
+					</div>
+						<div class="form_container" >
+							<form method="post" action=<?= '"index.php?action=postCom&img_id=' . $uimg['id'] . '"' ?>>
+								<textarea name="com"></textarea>
+								<input type="submit" name="submit" value="‣" class="sent" />
+							</form>
+						</div>
+				
+				
+			</div>
 		<?php endforeach; ?>
 	</div>
 </html>
