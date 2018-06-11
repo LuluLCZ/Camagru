@@ -16,14 +16,44 @@ function getPics()
 {
 	$result = new PostPic();
 	$req_res = $result->getImg($_SESSION['login']);
+	$res_com = new PostPic();
+	foreach ($req_res as $master => $value)
+	{
+		$req_res[$master]['coms'] = $res_com->getImgCom($req_res[$master]['id'], 0);
+	}
+	return $req_res;
+	// require_once('pages/profile.php');
+}
 
-	require_once('pages/profile.php');
+function getPicsUsr($usr)
+{
+	$result = new PostPic();
+	$req_res = $result->getImg($usr);
+	$res_com = new PostPic();
+	foreach ($req_res as $master => $value)
+	{
+		$req_res[$master]['coms'] = $res_com->getImgCom($req_res[$master]['id'], 0);
+	}
+	return $req_res;
+	// require_once('pages/profile.php');
 }
 
 function getAllPics()
 {
 	$result = new PostPic();
 	$req_res = $result->getAllImg();
+	$res_com = new PostPic();
+	foreach ($req_res as $master => $value)
+	{
+		$req_res[$master]['coms'] = $res_com->getImgCom($req_res[$master]['id'], 0);
+	}
+	return $req_res;
+}
+
+function getAllPicsRanked()
+{
+	$result = new PostPic();
+	$req_res = $result->getAllImgRanked();
 	$res_com = new PostPic();
 	foreach ($req_res as $master => $value)
 	{
@@ -40,14 +70,14 @@ function SayitisBeautifull()
 
 function HowMuchFamous($pic_id)
 {
-	$result = new LikesManager();
+	$result = new PostPic();
 	$res = $result->FamousorNot($_SESSION['uid'], $pic_id);
 	return ($res);
 }
 
 function HelpHimBecomeFamous()
 {
-	$result = new LikesManager();
+	$result = new PostPic();
 	$already = $result->FamousorNot($_SESSION['uid'], $_GET['pic_id']);
 	if (!$already)
 		$result->BecomingFamous($_SESSION['uid'], $_GET['pic_id']);

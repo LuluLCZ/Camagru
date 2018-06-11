@@ -21,11 +21,38 @@
 					<img class="image1" style="width: 600px;" src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
 					<img class="image2" src=<?=$uimg['filter_path']?>>
 				</div>
+				<?php if ($_SESSION['logged_on_user'] === true)
+						{ ?>
+						<div class="form_container" >
+							<form method="post" action=<?= '"index.php?action=postCom&img_id=' . $uimg['id'] . '"' ?>>
+								<textarea name="com"></textarea>
+								<input type="submit" name="submit" value="‣" class="sent" />
+							</form>
+						</div>
+						<?php } ?>
+			
+			<div class="com" style="height:126px;width:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
 			<?php foreach($uimg['coms'] as $tst): ?>
-			<div class="com"><div class="com_head"><p><?= $tst['d_com'] ?></p>
-							<p><?= $tst['auth'] ?></p></div>
-							<div><p><?= $tst['content'] ?></p></div></div>
+				<div class="com_head">
+					<div class="auth-com">
+						<?= $tst['auth'] ?>
+					</div>
+					<?= $tst['content'] ?>
+				</div>
 			<?php endforeach; ?>
+			</div>
+			<div class="icon">
+				<?php if ($_SESSION['logged_on_user'] === true)
+				{ ?>
+					<a href=<?= '"index.php?action=img_status&pic_id=' . $uimg['id'] . '"' ?>>♥</a>
+					<?php echo $uimg['nrate'];?>
+				<?php } ?>
+				<?php if (!$_SESSION['logged_on_user'])
+				{ ?>
+					♥
+					<?php echo $uimg['nrate'];?>
+				<?php } ?>
+				</div>
 			</div>
 			
 			<?php endforeach; ?>
