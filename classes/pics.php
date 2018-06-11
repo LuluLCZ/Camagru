@@ -65,6 +65,27 @@ class PostPic
 		}
 	}
 
+	public function getAllImgRanked()
+	{
+		$db = $this->dbconnect();
+		$req_res = array();
+		try
+		{
+			$request = $db->prepare('SELECT * FROM imgs ORDER BY nrate DESC');
+			$request->execute(array());
+			if ($request->rowCount())
+			{
+				$req_res = $request->fetchAll();
+			}
+			$req_res['content'] = $req_res;
+			return $req_res;
+		}
+		catch(Exception $e)
+		{
+			die("An error occured during account activation: " . $e->getMessge());
+		}
+	}
+
 	public function getImgCom($img_id, $all)
 	{
 		$db = $this->dbConnect();
@@ -137,8 +158,8 @@ class PostPic
 			));
 			try
 			{
-				$req2 = $db->prepare('UPDATE imgs SET rate = (rate + 1) WHERE uid = ? AND id = ?');
-				$req2->execute(array($uid, $img_id));
+				$req2 = $db->prepare('UPDATE imgs SET nrate = (nrate + 1) WHERE id = ?');
+				$req2->execute(array($img_id));
 				header("Location: index.php");
 			}
 			catch (Exception $e)
