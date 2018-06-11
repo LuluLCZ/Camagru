@@ -70,4 +70,17 @@ input[type="submit"]:hover {
 .com {
 	display: flex;
 	width: 250px;
+	flex-direction: column;
+}
+
+.auth-com {
+	color: rgba(85,172,238 ,1);
+}
+
+.heart {
+	color: rgba(85,172,238 ,1);
+}
+
+.heart-selected {
+	color: rgb(119, 0, 255);
 }

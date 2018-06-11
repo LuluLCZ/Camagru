@@ -15,7 +15,8 @@ require_once('classes_bdd/picture_manager.php');
 		require_once('pages/pictures.php');
 	else if (isset($_GET['pages']) && $_GET['pages'] === "profile")
 	{
-		getPics();
+		$req_res = getPics();
+		require_once('pages/profile.php');
 	}
 	else if (isset($_GET['pages']) && $_GET['pages'] === "info_account")
 		require_once('pages/info_account.php');
@@ -38,7 +39,6 @@ require_once('classes_bdd/picture_manager.php');
 	}
 	else if (isset($_GET['page']) && $_GET['page'] === "activate")
 	{
-		echo "OK";
 		activation();
 	}
 	elseif (isset($_GET['action']) && $_GET['action'] === "logout")
@@ -64,7 +64,20 @@ require_once('classes_bdd/picture_manager.php');
 	else if (isset($_GET['action']) && $_GET['action'] === 'postCom' && isset($_GET['img_id']))
 	{
 		SayitisBeautifull();
-		echo "OK";
+	}
+	else if (isset($_GET['action']) && $_GET['action'] == 'img_status' && isset($_GET['pic_id']))
+	{
+		HelpHimBecomeFamous($_GET['pic_id']);
+	}
+	else if (isset($_GET['action']) && $_GET['action'] == 'sortusr' &&isset($_POST['searchusr']))
+	{
+		$req_res = getPicsUsr($_POST['searchusr']);
+		require_once('pages/main.php');
+	}
+	else if (isset($_GET['ranked']) && $_GET['ranked'] == 'yes')
+	{
+		$req_res = getAllPicsRanked();
+		require_once('pages/main.php');
 	}
 	else
 	{

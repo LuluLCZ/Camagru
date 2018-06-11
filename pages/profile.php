@@ -10,21 +10,40 @@
 <body>
 	<div class="header-gallery">
 		<div class="title-1">Mes photos</div>
-		<?php foreach($req_res['content'] as $uimg): ?>
+		<?php foreach($req_res as $uimg): ?>
 			<div class="user-post">
-					<div class="double-pic">
-						<img class="image1" style="width: 600px;" alt=<?=$_SESSION['login']?> src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
-						<img class="image2" src=<?=$uimg['filter_path']?>>
+				<div class="double-pic">
+					<img class="image1" style="width: 600px;" alt=<?=$_SESSION['login']?> src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
+					<img class="image2" src=<?=$uimg['filter_path']?>>
+				</div>
+				<?php if ($_SESSION['logged_on_user'] === true)
+				{ ?>
+					<div class="form_container" >
+						<form method="post" action=<?= '"index.php?action=postCom&img_id=' . $uimg['id'] . '"' ?>>
+							<textarea name="com"></textarea>
+							<input type="submit" name="submit" value="‣" class="sent" />
+						</form>
 					</div>
-						<div class="form_container" >
-							<form method="post" action=<?= '"index.php?action=postCom&img_id=' . $uimg['id'] . '"' ?>>
-								<textarea name="com"></textarea>
-								<input type="submit" name="submit" value="‣" class="sent" />
-							</form>
+				<?php }?>
+				<div class="com" style="height:126px;width:350px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+					<?php foreach($uimg['coms'] as $tst): ?>
+						<div class="com_head">
+							<div class="auth-com">
+								<?= $tst['auth'] ?>
+							</div>
+							<div>
+								<?= $tst['content'] ?>
+							</div>
 						</div>
-				
-				
+					<?php endforeach; ?>
+				</div>
+				<div class="icon">
+						<a href=<?= '"index.php?action=img_status&pic_id=' . $uimg['id'] . '"' ?>class=<?php echo (!HowMuchfamous($uimg['id'])) ? "heart" : "heart-selected";?>>♥</a>
+					<?php echo $uimg['nrate'];?>
+				</div>
+				</div>
 			</div>
-		<?php endforeach; ?>
-	</div>
+			
+			<?php endforeach; ?>
+		</div>
 </html>
