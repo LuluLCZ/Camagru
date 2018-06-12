@@ -34,7 +34,29 @@ class MyProfile
 		}
 	}
 
-	
+	public function forgotPasswd($email)
+	{
+		$db = $this->dbConnect();
+		try
+		{
+			$request = $db->prepare('SELECT confirm_key FROM users WHERE email = :email');
+			$request->execute(array('email' => $email));
+			$answer = $request->fetch();
+			if ($answer)
+			{
+				$url = 'http://localhost:8081/index.php?pages=resetpasswd&key='.urlencode($answer['confirm_key']);
+				$content = 'Pour réinitialiser ton mot de passe clique sur le lien suivant :'.$url.' si tu n\'as pas demander une réinitialisation
+				de ton mot de passe tu peux ignorer ce message et te connecter comme bon te semble.';
+				$subject = 'Réinitialisation de ton mot de passe de Camagru !';
+				$content = wordwrap($content, 70, "\r\n");
+				mail($email, $subject, $content);
+			}
+		}
+		catch (Exception $e)
+		{
+			die('Erreur : ' . $e->getMessage());
+		}
+	}
 
 	public function deleteAccount($login, $passwd)
 	{
@@ -86,6 +108,54 @@ class MyProfile
 		{
 			echo "cannot update your bio.";
 		}
+	}
+
+	public function updatePseudo($oldpseudo, $npseudo)
+	{
+		$db = $this->dbConnect();
+		$exist = $db->prepare('SELECT * FROM users WHERE pseudo = :npseudo');
+		$exist->execute(array($npseudo));
+		if (!($exist->fetch()))
+		{
+			try
+			{
+				$request = $db->prepare('UPDATE users SET pseudo = :npseudo WHERE pseudo = :oldpseudo');
+				$request->execute(array('npseudo' => $npseudo, 'oldpseudo' => $oldpseudo));
+				$request = $db->prepare('UPDATE imgs SET author = :npseudo WHERE author = :oldpseudo');
+				$request->execute(array('npseudo' => $npseudo, 'oldpseudo' => $oldpseudo));
+				$request = $db->prepare('UPDATE img_com SET auth = :npseudo WHERE auth = :oldpseudo');
+				$request->execute(array('npseudo' => $npseudo, 'oldpseudo' => $oldpseudo));
+				$_SESSION['login'] = $npseudo;
+			}
+			catch(Exception $e)
+			{
+				echo "Probleme lors du changement de pseudo.<br />Veuillez réessayer ou contactez l'administrateur du site";
+			}
+		}
+		else
+			echo "Le pseudo que vous voulez utiliser est deja utilisé. Veuillez choisir un autre pseudo.";
+	}
+
+	public function updateMail($npseudo, $nmail)
+	{
+		$db = $this->dbConnect();
+		$exist = $db->prepare('SELECT * FROM users WHERE email = :nmail');
+		$exist->execute(array($nmail));
+		if (!($exist->fetch()))
+		{
+			try
+			{
+				$request = $db->prepare('UPDATE users SET email = :nmail WHERE pseudo = :npseudo');
+				$request->execute(array('nmail' => $nmail, 'npseudo' => $npseudo));
+				$_SESSION['email'] = $nmail;
+			}
+			catch(Exception $e)
+			{
+				echo "Probleme lors du changement de mail.<br />Veuillez réessayer ou contactez l'administrateur du site";
+			}
+		}
+		else
+			echo "Le mail que vous voulez utiliser est deja utilisé. Veuillez choisir un autre mail.";
 	}
 
 	private function dbConnect()

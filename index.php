@@ -18,6 +18,10 @@ require_once('classes_bdd/picture_manager.php');
 		$req_res = getPics();
 		require_once('pages/profile.php');
 	}
+	else if (isset($_GET['pages']) && $_GET['pages'] === 'passwdfrgt')
+	{
+		require_once('pages/newpass.php');
+	}
 	else if (isset($_GET['pages']) && $_GET['pages'] === "info_account")
 		require_once('pages/info_account.php');
 	else if (isset($_GET['action']) && $_GET['action'] === "signin")
@@ -69,6 +73,14 @@ require_once('classes_bdd/picture_manager.php');
 	{
 		HelpHimBecomeFamous($_GET['pic_id']);
 	}
+	else if (isset($_GET['action']) && $_GET['action'] == 'changePseudo')
+	{
+		changePseudo();
+	}
+	else if (isset($_GET['action']) && $_GET['action'] == 'changeMail')
+	{
+		changeMail();
+	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'sortusr' &&isset($_POST['searchusr']))
 	{
 		$req_res = getPicsUsr($_POST['searchusr']);
@@ -78,6 +90,14 @@ require_once('classes_bdd/picture_manager.php');
 	{
 		$req_res = getAllPicsRanked();
 		require_once('pages/main.php');
+	}
+	else if (!$_SESSION['logged_on_user'] && isset($_GET['action']) && $_GET['action'] == 'forgotPw' && isset($_POST) && isset($_POST['email_recup']))
+	{
+		sendRstMail();
+	}
+	else if (!$_SESSION['logged_on_user'] && isset($_GET['pages']) && $_GET['pages'] == 'resetpasswd' && isset($_GET['key']))
+	{
+		require_once('pages/new_passwd.php');
 	}
 	else
 	{

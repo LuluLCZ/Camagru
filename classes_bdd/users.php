@@ -60,8 +60,20 @@ function delAccount()
 function sendRstMail()
 {
 	$result = new MyProfile();
-	if (isset($_POST['email']))
-		$result->forgotPw($_POST['email']);
+	if (isset($_POST['email_recup']))
+	{
+		$result->forgotPasswd($_POST['email_recup']);
+	}
+}
+function changePseudo()
+{
+	$result = new MyProfile();
+	$result->updatePseudo($_SESSION['login'], $_POST['newPseudo']);
+}
+function changeMail()
+{
+	$result = new MyProfile();
+	$result->updateMail($_SESSION['login'], $_POST['newMail']);
 }
 function updSumup()
 {

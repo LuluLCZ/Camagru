@@ -7,6 +7,14 @@ ul {
 	list-style: none;
 }
 
+.heart  a{
+	color: rgba(85,172,238 ,1);
+}
+
+.heart-selected a{
+	color: rgb(119, 0, 255);
+}
+
 .navbar {
 	display: flex;
 	height: 46px;
@@ -111,6 +119,19 @@ a:visited {
 
 #buttons {
 	display: flex;
+}
+
+.heart  a{
+	color: rgba(85,172,238 ,1);
+}
+
+.big_contain {
+	display: flex;
+	
+}
+
+.heart-selected a{
+	color: rgb(119, 0, 255);
 }
 
 /* .nav .menu {

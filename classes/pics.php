@@ -117,6 +117,34 @@ class PostPic
 				'auth' => $auth,
 				'content' => $content
 			));
+			$db2 = $this->dbConnect();
+			try
+			{
+				$req_m = array();
+				$req_mail = $db2->prepare('SELECT author FROM imgs WHERE id = ?');
+				$req_mail->execute(array($img_id));
+				$req_m = $req_mail->fetch();
+				$db3 = $this->dbConnect();
+				try
+				{
+					$req_recup_mail = $db3->prepare('SELECT email FROM users WHERE pseudo = ?');
+					$req_recup_mail->execute(array($req_m['author']));
+					$req_mail_clear = $req_recup_mail->fetch();
+					$content = 'Vous avez reçu un commentaire sur une de vos photos ! Passez sur le site pour voir
+					cette nouvelle !';
+					$content = wordwrap($content, 70, "\r\n");
+					$subject = 'Nouveau commentaire !';
+					mail($req_mail_clear['email'], $subject, $content);
+				}
+				catch(Exception $e)
+				{
+					echo "An error occured : " . $e->getMessage();
+				}
+			}
+			catch(Exception $e)
+			{
+				echo "An error occured : " . $e->getMessage();
+			}
 			header("Location: index.php");
 		}
 		catch(Exception $e)
