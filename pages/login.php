@@ -19,6 +19,11 @@
 				<input type="password" name="passwd" id="passwd" required/><br />
 				<input class="button" type="submit" name="submit" value="Se connecter" />
 			</form>
+			<form action="/index.php?action=forgotPw" method="POST">
+				<label for="email_recup">Adresse mail</label>
+				<input type="email" name="email_recup" id="email" required /><br />
+				<input class="button" type="submit" name="submit" value="Changer mon mot de passer" />
+			</form>
 		</div>
 	</div>
 </body>

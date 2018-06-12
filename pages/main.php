@@ -44,7 +44,7 @@
 			<div class="icon">
 				<?php if ($_SESSION['logged_on_user'] === true)
 				{ ?>
-					<a href=<?= '"index.php?action=img_status&pic_id=' . $uimg['id'] . '"' ?>>♥</a>
+					<a href=<?= '"index.php?action=img_status&pic_id=' . $uimg['id'] . '"' ?>class=<?php echo (!HowMuchfamous($uimg['id'])) ? "heart" : "heart-selected";?>>♥</a>
 					<?php echo $uimg['nrate'];?>
 				<?php } ?>
 				<?php if (!$_SESSION['logged_on_user'])

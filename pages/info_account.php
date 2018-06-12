@@ -45,5 +45,21 @@
 				<input class="button" type="submit" name="submit" value="Envoyer" />
 			</form>
 		</div>
+		<div class="title-1" style="margin-top: 10px;">Changer mon pseudo !</div>
+		<div class="user-post">
+			<form action="/index.php?action=changePseudo" method="POST">
+				<label for="Nouveau pseudo">Nouveau pseudo</label>
+				<input type="text" name="newPseudo" id="newPseudo" required /><br />
+				<input class="button" type="submit" name="submit" value="Changer mon pseudo !" />
+			</form>
+		</div>
+		<div class="title-1" style="margin-top: 10px;">Changer mon addresse mail !</div>
+		<div class="user-post">
+			<form action="/index.php?action=changeMail" method="POST">
+				<label for="Nouvel email">Nouvel email</label>
+				<input type="text" name="newMail" id="newMail" required /><br />
+				<input class="button" type="submit" name="submit" value="Changer mon email !" />
+			</form>
+		</div>
 	</div>
 </html>
