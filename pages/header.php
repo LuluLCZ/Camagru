@@ -17,8 +17,8 @@
 					<li class="tendances"><a href="/index.php?ranked=yes"><i class="fab fa-hotjar"></i>Tendances</a></li>
 					<li>
 						<form action="/index.php?action=sortusr" method="POST">
-						<input type="searchusr" name="searchusr" id="searchusr" placeholder="Rechercher user"/>
-						<input class="button" type="submit" name="submit" value="search">
+							<input type="searchusr" name="searchusr" id="searchusr" placeholder="Rechercher user"/>
+							<input class="button" type="submit" name="submit" value="search">
 						</form>
 					</li>
 					<li><a href="/index.php?pages=info_account"><i class="fas fa-wrench"></i></a></li>
@@ -35,8 +35,8 @@
 					<li class="tendances"><a href="/index.php?ranked=yes"><i class="fab fa-hotjar"></i>Tendances</a></li>
 					<li>
 						<form action="/index.php?action=sortusr" method="POST">
-						<input type="searchusr" name="searchusr" id="searchusr" placeholder="Rechercher user"/>
-						<input class="button" type="submit" name="submit" value="search">
+							<input type="searchusr" name="searchusr" id="searchusr" placeholder="Rechercher user"/>
+							<input class="button" type="submit" name="submit" value="search">
 						</form>
 					</li>
 				<li><button>Guest</button></li>

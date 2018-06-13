@@ -13,8 +13,11 @@
 		<?php foreach($req_res as $uimg): ?>
 			<div class="user-post">
 				<div class="double-pic">
-					<img class="image1" style="width: 600px;" alt=<?=$_SESSION['login']?> src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
+					<img class="image1" style="width: 600px;" src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
 					<img class="image2" src=<?=$uimg['filter_path']?>>
+				</div>
+				<div class="supp-button">
+					<a href=<?= '"index.php?action=supp_pic&pic_id='.$uimg['id'].'"' ?>><i class="fas fa-trash-alt"></i></a>
 				</div>
 				<?php if ($_SESSION['logged_on_user'] === true)
 				{ ?>

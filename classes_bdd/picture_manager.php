@@ -22,6 +22,13 @@ function getPics()
 		$req_res[$master]['coms'] = $res_com->getImgCom($req_res[$master]['id'], 0);
 	}
 	return $req_res;
+}
+
+function delPic($pic_id)
+{
+	$result = new PostPic();
+	$result->deletePicture($pic_id);
+	
 	// require_once('pages/profile.php');
 }
 

@@ -41,6 +41,11 @@ require_once('classes_bdd/picture_manager.php');
 		
 		signup();
 	}
+	else if (isset($_GET['action']) && $_GET['action'] == 'supp_pic' && isset($_GET['pic_id']))
+	{
+		delPic($_GET['pic_id']);
+		require_once('index.php?pages=profile');
+	}
 	else if (isset($_GET['page']) && $_GET['page'] === "activate")
 	{
 		activation();

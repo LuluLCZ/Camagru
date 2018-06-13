@@ -201,6 +201,22 @@ class PostPic
 		}
 	}
 
+	public function deletePicture($pic_id)
+	{
+		$db = $this->dbConnect();
+		try
+		{
+			$req = $db->prepare('DELETE FROM imgs WHERE id = :pic_id');
+			$req->execute(array('pic_id' => $pic_id));
+			require_once('index.php?pages=profile');
+			
+		}
+		catch (Exception $e)
+		{
+			die('Erreur : ' . $e->getMessage());
+		}
+	}
+
 	private function dbConnect()
 	{
 		try
