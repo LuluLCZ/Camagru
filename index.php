@@ -66,7 +66,18 @@ require_once('classes_bdd/picture_manager.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === "signup")
 	{
-		signup();
+		if ($_POST['passwd'])
+		{
+			$uppercase = preg_match('@[A-Z]@', $_POST['passwd']);
+			$lowercase = preg_match('@[a-z]@', $_POST['passwd']);
+			$number    = preg_match('@[0-9]@', $_POST['passwd']);
+			
+			if(!$uppercase || !$lowercase || !$number || strlen($_POST['passwd']) < 8) {
+				echo "8 caracteres, une majuscule, une minuscule et un chiffre sont attendus pour un mot de passe correct";
+			}
+			else
+				signup();
+		}
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'supp_pic' && isset($_GET['pic_id']))
 	{
