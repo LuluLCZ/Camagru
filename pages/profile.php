@@ -8,6 +8,12 @@
 </head>
 
 <body>
+<?php 
+if(!$_SESSION['logged_on_user'])
+{
+	header('Location: /index.php');
+	echo "Vous n'etes pas connecté vous ne pouvez pas acceder a cette page.";
+}?>
 	<div class="header-gallery">
 		<div class="title-1">Description</div>
 		<div class="user-post">

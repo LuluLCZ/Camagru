@@ -7,6 +7,12 @@
 	<link rel="stylesheet" href="../index.css">
 </head>
 <body>
+<?php 
+if(!$_SESSION['logged_on_user'])
+{
+	header('Location: /index.php');
+	echo "Vous n'etes pas connecté vous ne pouvez pas acceder a cette page.";
+}?>
 <div class="big_contain">
 	<div class="screen-taken">
 		<video class="image1" id="screenshot-video" autoplay></video>

@@ -8,7 +8,13 @@ function sendNewPic()
 	$auth = $_SESSION['login'];
 	if (isset($_POST['camContent']) && isset($_POST['filterPath']))
 	{
-		$result->uploadImg(base64_decode($_POST['camContent']), $auth, $_SESSION['uid'], $_POST['filterPath']);
+		if ($_POST['camContent'] === 'undefined')
+		{
+			header('Location: /index.php');
+			echo "L'image choisie n est pas bonne.";
+		}
+		else
+			$result->uploadImg(base64_decode($_POST['camContent']), $auth, $_SESSION['uid'], $_POST['filterPath']);
 	}
 }
 

@@ -11,6 +11,12 @@
 </head>
 
 <body>
+<?php 
+if(!$_SESSION['logged_on_user'])
+{
+	header('Location: /index.php');
+	echo "Vous n'etes pas connecté vous ne pouvez pas acceder a cette page.";
+}?>
 <div class="big_contain">
 	<script type="text/javascript">
 		function changeImage(a) {
@@ -39,6 +45,7 @@
 
 	<div class="screen-taken">
 		<form id="form1" runat="server">
+			<input type="hidden" name="MAX_FILE_SIZE" value="8000000">
 			<input type="file" id="imgInp" accept="image/*"/>
 			<img class="image1" id="uploading" src="#" alt="ton image" />
 			<img class="image2" src="/data/0.png" id="filter_fix" />
