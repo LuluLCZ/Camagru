@@ -14,21 +14,6 @@ require_once('classes_bdd/picture_manager.php');
 		require_once('pages/login.php');
 	else if (isset($_GET['pages']) && $_GET['pages'] === "signup")
 		require_once('pages/signup.php');
-	else if (isset($_GET['pages']) && $_GET['pages'] === "pictures")
-		require_once('pages/pictures.php');
-	else if (isset($_GET['pages']) && $_GET['pages'] === "uploading")
-		require_once('pages/new_pic.php');
-	else if (isset($_GET['pages']) && $_GET['pages'] === "profile")
-	{
-		$req_res = getPics();
-		require_once('pages/profile.php');
-	}
-	else if (isset($_GET['pages']) && $_GET['pages'] === 'passwdfrgt')
-	{
-		require_once('pages/newpass.php');
-	}
-	else if (isset($_GET['pages']) && $_GET['pages'] === "info_account")
-		require_once('pages/info_account.php');
 	else if (isset($_GET['action']) && $_GET['action'] === "signin")
 	{
 		signin();
@@ -40,56 +25,126 @@ require_once('classes_bdd/picture_manager.php');
 			header('Location: /index.php');
 		}
 	}
+	else if (isset($_GET['page']) && $_GET['page'] === "activate")
+	{
+		activation();
+	}
+	else if (isset($_GET['pages']) && $_GET['pages'] === "pictures")
+	{
+		if ($_SESSION['logged_on_user'])
+			require_once('pages/pictures.php');
+		else
+			header('Location: /index.php');
+	}
+	else if (isset($_GET['pages']) && $_GET['pages'] === "uploading")
+	{
+		if ($_SESSION['logged_on_user'])
+			require_once('pages/new_pic.php');
+		else
+			header('Location: /index.php');
+	}
+	else if (isset($_GET['pages']) && $_GET['pages'] === "profile")
+	{
+		if ($_SESSION['logged_on_user'])
+		{
+			$req_res = getPics();
+			require_once('pages/profile.php');
+		}
+		else
+			header('Location: /index.php');
+	}
+	else if (isset($_GET['pages']) && $_GET['pages'] === 'passwdfrgt')
+	{
+		require_once('pages/newpass.php');
+	}
+	else if (isset($_GET['pages']) && $_GET['pages'] === "info_account")
+	{
+		if ($_SESSION['logged_on_user'])
+			require_once('pages/info_account.php');
+		else
+			header('Location: /index.php');
+	}
 	else if (isset($_GET['action']) && $_GET['action'] === "signup")
 	{
 		signup();
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'supp_pic' && isset($_GET['pic_id']))
 	{
-		delPic($_GET['pic_id'], $_GET['auth']);
+		if ($_SESSION['logged_on_user'])
+			delPic($_GET['pic_id'], $_GET['auth']);
+		else
+			header('Location: /index.php');
 	}
-	else if (isset($_GET['page']) && $_GET['page'] === "activate")
+	else if (isset($_GET['action']) && $_GET['action'] === "logout")
 	{
-		activation();
-	}
-	elseif (isset($_GET['action']) && $_GET['action'] === "logout")
-	{
-		session_destroy(); header('Location: /index.php');
+		if ($_SESSION['logged_on_user'])
+		{
+			session_destroy();
+			header('Location: /index.php');
+		}
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'postPic')
 	{
-		sendNewPic();
+		if ($_SESSION['logged_on_user'])
+			sendNewPic();
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'newpw')
 	{
-		changePw();
+		if ($_SESSION['logged_on_user'])
+			header('Location: /index.php');
+		else
+			changePw();
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'updsumup')
 	{
-		updSumup();
+		if ($_SESSION['logged_on_user'])
+			updSumup();
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'delacc')
 	{
-		delAccount();
+		if ($_SESSION['logged_on_user'])
+			delAccount();
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'postCom' && isset($_GET['img_id']))
 	{
-		if ($_POST['com'] !== "")
-			SayitisBeautifull();
+		if ($_SESSION['logged_on_user'])
+		{
+			if ($_POST['com'] !== "")
+				SayitisBeautifull();
+			else
+				header("Location: index.php");
+		}
 		else
-			header("Location: index.php");
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'img_status' && isset($_GET['pic_id']))
 	{
-		HelpHimBecomeFamous($_GET['pic_id']);
+		if ($_SESSION['logged_on_user'])
+			HelpHimBecomeFamous($_GET['pic_id']);
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'changePseudo')
 	{
-		changePseudo();
+		if ($_SESSION['logged_on_user'])
+			changePseudo();
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'changeMail')
 	{
-		changeMail();
+		if ($_SESSION['logged_on_user'])
+			changeMail();
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'sortusr' &&isset($_POST['searchusr']))
 	{
@@ -111,7 +166,10 @@ require_once('classes_bdd/picture_manager.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'notif')
 	{
-		notif();
+		if ($_SESSION['logged_on_user'])
+			notif();
+		else
+			header('Location: /index.php');
 	}
 	else if (isset($_GET['index']))
 	{

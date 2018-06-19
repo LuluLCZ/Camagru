@@ -53,7 +53,7 @@ class LogManager
 				return "Vous allez recevoir un mail d'activation sur votre adresse mail.";
 			}
 			else
-			echo "Le pseudo que vous avez rentrer est deja utilisé.";
+				return "Le pseudo ou l'email que vous avez rentrer est deja utilisé.";
 		
 	}
 

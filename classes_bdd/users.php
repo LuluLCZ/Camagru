@@ -35,7 +35,7 @@ function signup()
 		echo $res;
 	}
 	else
-		echo "An error occurred, check if your inputs are not empty and try again.";
+		echo $res;
 }
 
 function activation()

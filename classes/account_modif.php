@@ -23,11 +23,11 @@ class MyProfile
 		$db = $this->dbConnect();
 		try
 		{
-			$request = $db->prepare('UPDATE users SET passwd = :new WHERE pseudo = :login');
+			$request = $db->prepare('UPDATE users SET passwd = :new WHERE pseudo = :login OR confirm_key = :key');
 			$request->execute(array(
 									'new' => hash('whirlpool', $newpw),
-									'login' => $login));
-									// 'confirm_key' => $key));
+									'login' => $login,
+									'key' => $key));
 			return (true);
 		}
 		catch (Exception $e)
