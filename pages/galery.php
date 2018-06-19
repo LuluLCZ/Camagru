@@ -14,5 +14,5 @@
 			<div class="title-1">Gallerie</div>
 			<div class="user-post"></div>
 		</div>
-	</body>
+	<!-- <body> -->
 </html>

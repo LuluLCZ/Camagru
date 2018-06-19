@@ -15,6 +15,16 @@ function signin()
 		echo "An error occurred, check if your inputs are not empty and try again.";
 }
 
+function notif()
+{
+	$result = new MyProfile();
+	if ($_POST['notif'] === 'Activer')
+		$result->updateNotif($_SESSION['login'], 1);
+	else
+		$result->updateNotif($_SESSION['login'], 0);
+	// header('Location: /index.php');
+}
+
 function signup()
 {
 	if (isset($_POST) && isset($_POST['email']) && isset($_POST['passwd']) && isset($_POST['pseudo']) && $_POST['passwd'] === $_POST['passwd_confirm'])
@@ -54,8 +64,8 @@ function changePw()
 function delAccount()
 {
 	$result = new MyProfile();
-	if (isset($_POST['passwd']))
-		$result->rmAccount($_SESSION['login'], $_POST['passwd']);
+	if (isset($_POST['Deletemyaccount']) && $_POST['Deletemyaccount'] === 'JE VEUX SUPPRIMER MON COMPTE')
+		$result->deleteAccount($_SESSION['login']);
 }
 function sendRstMail()
 {

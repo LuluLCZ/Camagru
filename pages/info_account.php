@@ -61,5 +61,12 @@
 				<input class="button" type="submit" name="submit" value="Changer mon email !" />
 			</form>
 		</div>
+		<div class="title-1">Notifications</div>
+		<div class="user-post">
+			<form action="/index.php?action=notif" method="POST">
+				<input class="button" type="submit" name="notif" id="notif" value=<?= ($_SESSION['autonotif'] == 1) ? Désactiver : Activer?>>
+			</form>
+		</div>
 	</div>
+	</body>
 </html>

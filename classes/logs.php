@@ -14,6 +14,7 @@ class LogManager
 			$_SESSION['login'] = $user_info['pseudo'];
 			$_SESSION['email'] = $user_info['email'];
 			$_SESSION['sumup'] = $user_info['sumup'];
+			$_SESSION['autonotif'] = $user_info['autonotif'];
 			$_SESSION['logged_on_user'] = true;
 			$_SESSION['logged_on_admin'] = ($user_info['admin'] = '0') ? false : true; 
 		}
@@ -26,31 +27,32 @@ class LogManager
 		$db = $this->dbConnect();
 		$exist = $db->prepare('SELECT * FROM users WHERE email = ? OR pseudo = ?');
 		$exist->execute(array($email, $pseudo));
-		if (!($exist->fetch()))	
+		if (!($exist->fetch()))
 		{
 			$confirm_key = hash('md5', rand());
 			try {
-				$request = $db->prepare('INSERT INTO users(pseudo, passwd, email, admin, confirm, confirm_key, sumup)
-					VALUES(:pseudo, :password, :email, :admin, :confirm, :confirm_key, :sumup)');
+				$request = $db->prepare('INSERT INTO users(pseudo, passwd, email, admin, confirm, confirm_key, sumup, autonotif)
+					VALUES(:pseudo, :password, :email, :admin, :confirm, :confirm_key, :sumup, :autonotif)');
 				$request->execute(array('pseudo' => $pseudo,
 									'password' => hash('whirlpool', $password),
 									'email' => $email,
 									'admin' => $admin,
 									'confirm' => 0,
 									'confirm_key' => $confirm_key,
-									'sumup' => "Description"
+									'sumup' => 'bonjour',
+									'autonotif' => 1
 								)); ///////////////////////// -------------------------------- rand -> conf key
 				}
-			catch(Exception $e) {echo "An error occured" . $e->getMessage();}
-			$url = 'http://localhost:8080/index.php?page=activate&login=' . urlencode($pseudo) . '&key=' . urlencode($confirm_key); ///////////////////////////// ----------------------------------------
-			$content = 'Thanks for your subscription ' . $pseudo . ' and welcome on board.
-			 Please click on the following link to activate your account: ' . $url;
-			$content = wordwrap($content, 70, "\r\n");
-			$subject = 'Activation of your account';
-			mail($email, $subject, $content);
-			return "Vous allez recevoir un mail d'activation sur votre adresse mail.";
-		}
-		else
+				catch(Exception $e) {die("An error occured" . $e->getMessage());}
+				$url = 'http://localhost:8080/index.php?page=activate&login=' . urlencode($pseudo) . '&key=' . urlencode($confirm_key); ///////////////////////////// ----------------------------------------
+				$content = 'Thanks for your subscription ' . $pseudo . ' and welcome on board.
+				Please click on the following link to activate your account: ' . $url;
+				$content = wordwrap($content, 70, "\r\n");
+				$subject = 'Activation of your account';
+				mail($email, $subject, $content);
+				return "Vous allez recevoir un mail d'activation sur votre adresse mail.";
+			}
+			else
 			echo "Le pseudo que vous avez rentrer est deja utilisé.";
 		
 	}

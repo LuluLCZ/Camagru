@@ -28,8 +28,13 @@ ul {
 }
 
 form {
-	/* display: flex; */
+	display: flex;
 	margin: auto;
+}
+
+body {
+	position: relative;
+	padding-bottom: 55px;
 }
 
 a {
@@ -128,12 +133,64 @@ a:visited {
 .big_contain {
 	display: flex;
 	flex-direction: column;
-	
+	padding-bottom: 3%;
 }
 
 .heart-selected a{
 	color: rgb(119, 0, 255);
 }
+
+.next-prev
+{
+	display: flex;
+
+}
+
+.next-prev a
+{
+	margin-left: auto;
+	margin-right: auto;
+	text-decoration: none;
+	/* display: inline-block; */
+	padding: 8px 16px;
+}
+
+.next-prev a:hover
+{
+	background-color: #ddd;
+	color: black;
+}
+
+.previous {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.next {
+    background-color: rgba(85,172,238 ,1);
+    color: white;
+}
+
+.round {
+	border-radius: 50%;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	color: rgba(85,172,238 ,1);
+}
+input[type="submit"] {
+    font-size: 0.8em;
+    border: 0;
+    background: rgba(85,172,238 ,1);
+    color: #fff;
+    border-radius: 100px;
+}
+
+/* .paginate {
+	padding-bottom: 3%;
+} */
 
 /* .nav .menu {
 	display: flex;

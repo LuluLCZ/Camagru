@@ -12,6 +12,9 @@
 				Gallerie
 			</div>
 			<?php foreach($req_res as $uimg): ?>
+				<?php if(!$uimg['author']): ?>
+				<div></div>
+				<?php else : ?>
 			<div class="user-post">
 				<div class="author-name">
 					<?= $uimg['author'] ?>
@@ -54,8 +57,13 @@
 				<?php } ?>
 				</div>
 			</div>
-			
+				<?php endif;?>
 			<?php endforeach; ?>
 		</div>
+		<div class="paginate">
+			<?php $i = getNumber(); ceil($i/5); $u = 0; while ($u <ceil($i/5)) {?>
+				<a href=<?= '"index.php?index=' . $u . '"' ?> class="w3-bar-item w3-button"><?= $u ?></a>
+			<?php $u++;}?>
+	  </div>
 	</body>
 </html>

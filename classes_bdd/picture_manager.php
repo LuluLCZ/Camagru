@@ -24,11 +24,26 @@ function getPics()
 	return $req_res;
 }
 
-function delPic($pic_id)
+function getNumber()
 {
 	$result = new PostPic();
-	$result->deletePicture($pic_id);
-	
+	$req_res = $result->getNData();
+	return ($req_res);
+}
+
+function transf()
+{
+	$result = new PostPic();
+	$req_res = $result->transfert();
+}
+
+function delPic($pic_id, $auth)
+{
+	if ($_SESSION['logged_on_user'] == $auth)
+	{
+		$result = new PostPic();
+		$result->deletePicture($pic_id);
+	}
 	// require_once('pages/profile.php');
 }
 
@@ -45,10 +60,11 @@ function getPicsUsr($usr)
 	// require_once('pages/profile.php');
 }
 
-function getAllPics()
+function getAllPics($i)
 {
+	$i = $i * 5;
 	$result = new PostPic();
-	$req_res = $result->getAllImg();
+	$req_res = $result->getAllImg($i);
 	$res_com = new PostPic();
 	foreach ($req_res as $master => $value)
 	{
@@ -72,7 +88,7 @@ function getAllPicsRanked()
 function SayitisBeautifull()
 {
 	$result = new PostPic();
-	$result->addNewComment($_GET['img_id'] ,$_SESSION['login'], $_POST['com']);
+	$result->addNewComment($_GET['img_id'] ,$_SESSION['login'], $_POST['com'], $_SESSION['autonotif']);
 }
 
 function HowMuchFamous($pic_id)

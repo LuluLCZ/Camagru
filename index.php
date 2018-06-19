@@ -1,8 +1,11 @@
 <?php
 session_start();
+include('config/setup.php');
 require_once('classes_bdd/users.php');
 require_once('classes_bdd/picture_manager.php');
 
+
+	$i = ceil(getNumber());
 	if ((isset($_GET['pages']) && ($_GET['pages'] !== "login" || $_GET['pages'] !== 'signup')) || !(isset($_GET['pages'])))
 	{
 		include('pages/header.php');
@@ -13,6 +16,8 @@ require_once('classes_bdd/picture_manager.php');
 		require_once('pages/signup.php');
 	else if (isset($_GET['pages']) && $_GET['pages'] === "pictures")
 		require_once('pages/pictures.php');
+	else if (isset($_GET['pages']) && $_GET['pages'] === "uploading")
+		require_once('pages/new_pic.php');
 	else if (isset($_GET['pages']) && $_GET['pages'] === "profile")
 	{
 		$req_res = getPics();
@@ -37,14 +42,11 @@ require_once('classes_bdd/picture_manager.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === "signup")
 	{
-		print_r($_POST);
-		
 		signup();
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'supp_pic' && isset($_GET['pic_id']))
 	{
-		delPic($_GET['pic_id']);
-		require_once('index.php?pages=profile');
+		delPic($_GET['pic_id'], $_GET['auth']);
 	}
 	else if (isset($_GET['page']) && $_GET['page'] === "activate")
 	{
@@ -72,7 +74,10 @@ require_once('classes_bdd/picture_manager.php');
 	}
 	else if (isset($_GET['action']) && $_GET['action'] === 'postCom' && isset($_GET['img_id']))
 	{
-		SayitisBeautifull();
+		if ($_POST['com'] !== "")
+			SayitisBeautifull();
+		else
+			header("Location: index.php");
 	}
 	else if (isset($_GET['action']) && $_GET['action'] == 'img_status' && isset($_GET['pic_id']))
 	{
@@ -104,10 +109,20 @@ require_once('classes_bdd/picture_manager.php');
 	{
 		require_once('pages/new_passwd.php');
 	}
+	else if (isset($_GET['action']) && $_GET['action'] === 'notif')
+	{
+		notif();
+	}
+	else if (isset($_GET['index']))
+	{
+		$req_res = getAllPics($_GET['index']);
+		require_once('pages/main.php');
+		
+	}
 	else
 	{
-		$req_res = getAllPics();
-		// var_dump($req_res['0']['coms']);
+		$req_res = getAllPics(0);
 		require_once('pages/main.php');
 	}
+	include('pages/footer.php');
 ?>

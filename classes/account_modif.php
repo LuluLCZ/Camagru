@@ -11,6 +11,8 @@ class MyProfile
 		}
 	}
 
+
+
 	private function sendMail($to, $subject, $content)
 	{
 		mail($to, $subject, $content);
@@ -58,13 +60,17 @@ class MyProfile
 		}
 	}
 
-	public function deleteAccount($login, $passwd)
+	public function deleteAccount($login)
 	{
 		$db = $this->dbconnect();
 		try
 		{
-			$req = $db->prepare('DELETE FROM users WHERE pseudo =:pseudo AND passwd =:passwd');
-			$req->execute(array('pseudo' => $login, 'passwd' => $passwd));
+			$req = $db->prepare('DELETE FROM users WHERE pseudo = :login');
+			$req->execute(array('login' => $login));
+			$req = $db->prepare('DELETE FROM imgs WHERE author =:pseudo');
+			$req->execute(array('pseudo' => $login));
+			$req = $db->prepare('DELETE FROM img_com WHERE auth =:pseudo');
+			$req->execute(array('pseudo' => $login));
 			if ($req->rowCount() > 0)
 			{
 				session_destroy();
@@ -110,6 +116,25 @@ class MyProfile
 		}
 	}
 
+	public function updateNotif($login, $choice)
+	{
+		$db = $this->dbConnect();
+		try
+		{
+			$request = $db->prepare('UPDATE users SET autonotif = :choice WHERE pseudo = :log');
+			$request->execute(array(
+				'choice' => $choice,
+				'log' => $login
+			));
+			$_SESSION['autonotif'] = ($request->rowCount()) ? $choice : $_SESSION['autonotif'];
+			header('Location: index.php');
+		}
+		catch(Exception $e)
+		{
+			echo "cannot update your bio.";
+		}
+	}
+
 	public function updatePseudo($oldpseudo, $npseudo)
 	{
 		$db = $this->dbConnect();
@@ -139,8 +164,8 @@ class MyProfile
 	public function updateMail($npseudo, $nmail)
 	{
 		$db = $this->dbConnect();
-		$exist = $db->prepare('SELECT * FROM users WHERE email = :nmail');
-		$exist->execute(array($nmail));
+		$exist = $db->prepare('SELECT pseudo FROM users WHERE email = :nmail');
+		$exist->execute(array('nmail' => $nmail));
 		if (!($exist->fetch()))
 		{
 			try

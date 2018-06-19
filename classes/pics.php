@@ -44,14 +44,31 @@ class PostPic
 		}
 	}
 
-	public function getAllImg()
+	public function getNData()
+	{
+		$db = $this->dbConnect();
+		try
+		{
+			$nb = $db->prepare('SELECT COUNT(*) FROM imgs');
+			$nb->execute(array());
+			$ret = $nb->fetch();
+			return $ret[0];
+		}
+		catch(Exception $e)
+		{
+			die("An error occured during account activation: " . $e->getMessge());
+		}
+	}
+
+	public function getAllImg($debut)
 	{
 		$db = $this->dbconnect();
 		$req_res = array();
 		try
 		{
-			$request = $db->prepare('SELECT * FROM imgs ORDER BY id DESC');
-			$request->execute(array());
+			$request = $db->prepare('SELECT * FROM imgs ORDER BY id DESC LIMIT :debut, 5');
+			$request->bindParam(':debut', $debut, PDO::PARAM_INT);
+			$request->execute();
 			if ($request->rowCount())
 			{
 				$req_res = $request->fetchAll();
@@ -95,7 +112,7 @@ class PostPic
 			if ($all)
 				$req = $db->prepare('SELECT id, DATE_FORMAT(date_com, \'%Y/%m/%d at %Hh%i\') AS d_com, auth, content, rate FROM img_com WHERE img_id = ?');
 			else
-				$req = $db->prepare('SELECT id, DATE_FORMAT(date_com, \'%m/%d at %Hh\') AS d_com, auth, content, rate FROM img_com WHERE img_id = ? ORDER BY id DESC LIMIT 5');
+				$req = $db->prepare('SELECT id, DATE_FORMAT(date_com, \'%m/%d at %Hh\') AS d_com, auth, content, rate FROM img_com WHERE img_id = ? ORDER BY id DESC');
 			$req->execute(array($img_id));
 			$com_tab = $req->fetchAll();
 		}
@@ -106,7 +123,7 @@ class PostPic
 		return $com_tab;
 	}
 
-	public function addNewComment($img_id, $auth, $content)
+	public function addNewComment($img_id, $auth, $content, $notif)
 	{
 		$db = $this->dbConnect();
 		try
@@ -117,33 +134,36 @@ class PostPic
 				'auth' => $auth,
 				'content' => $content
 			));
-			$db2 = $this->dbConnect();
-			try
+			if ($notif == 1)
 			{
-				$req_m = array();
-				$req_mail = $db2->prepare('SELECT author FROM imgs WHERE id = ?');
-				$req_mail->execute(array($img_id));
-				$req_m = $req_mail->fetch();
-				$db3 = $this->dbConnect();
+				$db2 = $this->dbConnect();
 				try
 				{
-					$req_recup_mail = $db3->prepare('SELECT email FROM users WHERE pseudo = ?');
-					$req_recup_mail->execute(array($req_m['author']));
-					$req_mail_clear = $req_recup_mail->fetch();
-					$content = 'Vous avez reçu un commentaire sur une de vos photos ! Passez sur le site pour voir
-					cette nouvelle !';
-					$content = wordwrap($content, 70, "\r\n");
-					$subject = 'Nouveau commentaire !';
-					mail($req_mail_clear['email'], $subject, $content);
+					$req_m = array();
+					$req_mail = $db2->prepare('SELECT author FROM imgs WHERE id = ?');
+					$req_mail->execute(array($img_id));
+					$req_m = $req_mail->fetch();
+					$db3 = $this->dbConnect();
+					try
+					{
+						$req_recup_mail = $db3->prepare('SELECT email FROM users WHERE pseudo = ?');
+						$req_recup_mail->execute(array($req_m['author']));
+						$req_mail_clear = $req_recup_mail->fetch();
+						$content = 'Vous avez reçu un commentaire sur une de vos photos ! Passez sur le site pour voir
+						cette nouvelle !';
+						$content = wordwrap($content, 70, "\r\n");
+						$subject = 'Nouveau commentaire !';
+						mail($req_mail_clear['email'], $subject, $content);
+					}
+					catch(Exception $e)
+					{
+						echo "An error occured : " . $e->getMessage();
+					}
 				}
 				catch(Exception $e)
 				{
 					echo "An error occured : " . $e->getMessage();
 				}
-			}
-			catch(Exception $e)
-			{
-				echo "An error occured : " . $e->getMessage();
 			}
 			header("Location: index.php");
 		}

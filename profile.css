@@ -29,6 +29,11 @@
 	box-shadow: 5px 10px 20px -20px rgba(85,172,238 ,1);
 }
 
+footer {
+	bottom: 0;
+	position: absolute;
+}
+
 .user-post form {
 	display: flex;
 	flex-direction: column;
@@ -83,4 +88,30 @@ input[type="submit"]:hover {
 
 .heart-selected {
 	color: rgb(119, 0, 255);
+}
+
+.previous {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.next {
+    background-color: rgba(85,172,238 ,1);
+    color: white;
+}
+
+.round {
+	border-radius: 50%;
+	
+}
+
+.paginate {
+	display: flex;
+	flex-direction: row;
+}
+.paginate a{
+	margin-left: auto;
+	margin-right: auto;
+	padding: 8px 16px;
+	/* flex-direction: column; */
 }

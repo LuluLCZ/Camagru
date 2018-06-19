@@ -9,15 +9,23 @@
 
 <body>
 	<div class="header-gallery">
+		<div class="title-1">Description</div>
+		<div class="user-post">
+			<?= $_SESSION['sumup'] ?>
+		</div>
+		</div>
 		<div class="title-1">Mes photos</div>
 		<?php foreach($req_res as $uimg): ?>
+		<?php if(!$uimg['author']): ?>
+				<div></div>
+				<?php else : ?>
 			<div class="user-post">
 				<div class="double-pic">
 					<img class="image1" style="width: 600px;" src=<?= '"data:image/png;charset:utf-8;base64,' . base64_encode($uimg['content']) . '"'?> />
 					<img class="image2" src=<?=$uimg['filter_path']?>>
 				</div>
 				<div class="supp-button">
-					<a href=<?= '"index.php?action=supp_pic&pic_id='.$uimg['id'].'"' ?>><i class="fas fa-trash-alt"></i></a>
+					<a href=<?= '"index.php?action=supp_pic&pic_id='.$uimg['id'].'&auth='.$uimg['author'].'"' ?>><i class="fas fa-trash-alt"></i></a>
 				</div>
 				<?php if ($_SESSION['logged_on_user'] === true)
 				{ ?>
@@ -40,13 +48,10 @@
 						</div>
 					<?php endforeach; ?>
 				</div>
-				<div class="icon">
-						<a href=<?= '"index.php?action=img_status&pic_id=' . $uimg['id'] . '"' ?>class=<?php echo (!HowMuchfamous($uimg['id'])) ? "heart" : "heart-selected";?>>♥</a>
-					<?php echo $uimg['nrate'];?>
-				</div>
 				</div>
 			</div>
-			
-			<?php endforeach; ?>
+			<?php endif;?>
+
+				<?php endforeach; ?>
 		</div>
 </html>
